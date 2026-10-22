@@ -2,36 +2,34 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Timeline</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    html, body {
-      width: 100%;
-      min-height: 420px;          /* 모바일 iframe 높이 확보 */
+    body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
       background: #ffffff;
       color: #333;
-      padding: 14px 10px 20px;
+      padding: 16px 10px;
       line-height: 1.35;
     }
 
     .container {
       max-width: 860px;
       margin: 0 auto;
-      width: 100%;
     }
 
+    /* 제목 */
     .title {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .title-bar {
       width: 4px;
-      height: 26px;
+      height: 24px;
       background: #5b4fc7;
       border-radius: 2px;
     }
@@ -39,84 +37,92 @@
       font-size: 20px;
       font-weight: 700;
       color: #2d2d3a;
+      letter-spacing: -0.4px;
     }
 
-    /* 기본: 가로 배치 */
+    /* 타임라인 - 스크롤 제거 */
     .timeline-wrap {
       display: flex;
       gap: 10px;
       width: 100%;
     }
 
+    /* 왼쪽 카드 - 더 좁게 */
     .side {
       flex-shrink: 0;
-      width: 130px;
+      width: 128px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      padding-top: 36px;
+      padding-top: 40px;
     }
 
     .card {
       background: #fff;
       border-radius: 11px;
-      padding: 10px 11px;
+      padding: 10px 10px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.06);
       border: 1px solid #f0f0f5;
       display: flex;
       align-items: center;
       gap: 8px;
-      min-height: 54px;
+      min-height: 56px;
     }
 
     .card-icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: #fff4e6;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
       flex-shrink: 0;
+      font-size: 15px;
     }
 
     .card-text {
       font-size: 12px;
       font-weight: 600;
+      color: #333;
       line-height: 1.25;
     }
 
+    /* 오른쪽 차트 */
     .chart {
       flex: 1;
-      min-width: 0;
+      min-width: 0;          /* 중요: 줄어들 수 있게 */
+      position: relative;
     }
 
+    /* 월 헤더 */
     .months {
       display: grid;
       grid-template-columns: repeat(18, 1fr);
       margin-bottom: 6px;
-      height: 30px;
+      height: 34px;
     }
 
     .month {
       text-align: center;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: #666;
       background: #f7f7fb;
-      border-radius: 5px;
+      border-radius: 6px;
       margin: 0 1px;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 26px;
+      height: 28px;
     }
 
+    /* 그리드 */
     .grid {
       position: relative;
-      height: 180px;
-      background: linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), #eee calc(100% - 1px));
+      height: 200px;
+      background: linear-gradient(to right, 
+        transparent 0%, transparent calc(100% - 1px), #eee calc(100% - 1px));
       background-size: calc(100% / 18) 100%;
     }
 
@@ -124,23 +130,26 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 44px;
+      height: 48px;
+      display: flex;
+      align-items: center;
     }
-    .row:nth-child(1) { top: 4px; }
-    .row:nth-child(2) { top: 58px; }
-    .row:nth-child(3) { top: 112px; }
+
+    .row:nth-child(1) { top: 6px; }
+    .row:nth-child(2) { top: 68px; }
+    .row:nth-child(3) { top: 130px; }
 
     .bar {
       position: absolute;
-      height: 32px;
-      border-radius: 8px;
+      height: 34px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
-      padding: 0 8px;
-      font-size: 12px;
+      padding: 0 10px;
+      font-size: 13px;
       font-weight: 600;
       color: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -150,45 +159,23 @@
     .bar.yellow{ background: linear-gradient(90deg, #f0c14b, #f7d774); color: #333; }
     .bar.pink  { background: linear-gradient(90deg, #e88a9e, #f0a8b8); }
 
+    /* 하단 연도 */
     .years {
       display: flex;
       justify-content: space-between;
-      margin-top: 8px;
-      font-size: 11px;
+      margin-top: 10px;
+      padding: 0 2px;
+      font-size: 12px;
       color: #999;
+      font-weight: 500;
     }
 
-    /* ===== 모바일: 세로 배치로 전환 ===== */
+    /* 모바일 */
     @media (max-width: 640px) {
-      html, body { min-height: 560px; padding: 12px 8px 16px; }
-      
-      .timeline-wrap {
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .side {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-top: 0;
-        gap: 8px;
-      }
-
-      .card {
-        flex: 1;
-        min-width: 140px;
-        min-height: 48px;
-      }
-
+      .side { width: 110px; }
       .card-text { font-size: 11px; }
-
-      .months { height: 28px; }
-      .month { font-size: 9px; height: 24px; }
-
-      .grid { height: 170px; }
-
-      .bar { font-size: 11px; height: 30px; padding: 0 6px; }
+      .bar { font-size: 12px; padding: 0 8px; }
+      .month { font-size: 10px; }
     }
   </style>
 </head>
@@ -200,6 +187,7 @@
     </div>
 
     <div class="timeline-wrap">
+      <!-- 왼쪽 카드 -->
       <div class="side">
         <div class="card">
           <div class="card-icon">🚗</div>
@@ -215,24 +203,49 @@
         </div>
       </div>
 
+      <!-- 오른쪽 차트 -->
       <div class="chart">
         <div class="months">
-          <div class="month">9</div><div class="month">10</div><div class="month">11</div><div class="month">12</div>
-          <div class="month">1</div><div class="month">2</div><div class="month">3</div><div class="month">4</div>
-          <div class="month">5</div><div class="month">6</div><div class="month">7</div><div class="month">8</div>
-          <div class="month">9</div><div class="month">10</div><div class="month">11</div><div class="month">12</div>
-          <div class="month">1</div><div class="month">2</div>
+          <div class="month">9</div>
+          <div class="month">10</div>
+          <div class="month">11</div>
+          <div class="month">12</div>
+          <div class="month">1</div>
+          <div class="month">2</div>
+          <div class="month">3</div>
+          <div class="month">4</div>
+          <div class="month">5</div>
+          <div class="month">6</div>
+          <div class="month">7</div>
+          <div class="month">8</div>
+          <div class="month">9</div>
+          <div class="month">10</div>
+          <div class="month">11</div>
+          <div class="month">12</div>
+          <div class="month">1</div>
+          <div class="month">2</div>
         </div>
 
         <div class="grid">
+          <!-- AI 주차공유 : 2021.08~2022.02 -->
           <div class="row">
-            <div class="bar pink" style="left: 55.55%; width: 38.88%;">AI 주차공유 · PL</div>
+            <div class="bar pink" style="left: 55.55%; width: 38.88%;">
+              AI 주차공유 · PL
+            </div>
           </div>
+
+          <!-- AI 홈트레이닝 : 2021.05~10 -->
           <div class="row">
-            <div class="bar yellow" style="left: 44.44%; width: 33.33%;">AI 홈트레이닝 · 사업기획</div>
+            <div class="bar yellow" style="left: 44.44%; width: 33.33%;">
+              AI 홈트레이닝 · 사업기획
+            </div>
           </div>
+
+          <!-- 지하공동구 : 2020.09~12 -->
           <div class="row">
-            <div class="bar sky" style="left: 0%; width: 28%;">지하공동구 스마트 관리</div>
+            <div class="bar sky" style="left: 0%; width: 28%;">
+              지하공동구 스마트 관리
+            </div>
           </div>
         </div>
 
