@@ -1,72 +1,77 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Project Timeline</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
+
+    html, body {
+      width: 100%;
+      min-height: 400px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
       background: #ffffff;
       color: #333;
-      padding: 16px 10px;
+      padding: 16px 12px 24px;
       line-height: 1.35;
     }
 
     .container {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
+      width: 100%;
     }
 
     /* 제목 */
     .title {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 20px;
     }
     .title-bar {
       width: 4px;
       height: 26px;
       background: #5b4fc7;
       border-radius: 2px;
+      flex-shrink: 0;
     }
     .title h1 {
-      font-size: 22px;          /* +2pt */
+      font-size: 22px;
       font-weight: 700;
       color: #2d2d3a;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.3px;
     }
 
-    /* 타임라인 - 스크롤 없음 */
+    /* 레이아웃 */
     .timeline-wrap {
       display: flex;
-      gap: 10px;
+      gap: 14px;
       width: 100%;
+      align-items: flex-start;
     }
 
-    /* 왼쪽 카드 - 좌우 약간 넓힘 */
+    /* 왼쪽 카드 */
     .side {
       flex-shrink: 0;
-      width: 138px;
+      width: 142px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       padding-top: 40px;
     }
 
     .card {
       background: #fff;
-      border-radius: 11px;
-      padding: 10px 11px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      padding: 12px 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
       border: 1px solid #f0f0f5;
       display: flex;
       align-items: center;
-      gap: 8px;
-      min-height: 56px;
+      gap: 10px;
+      min-height: 58px;
     }
 
     .card-icon {
@@ -77,30 +82,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
       font-size: 15px;
+      flex-shrink: 0;
     }
 
     .card-text {
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 600;
-      color: #333;
-      line-height: 1.25;
+      line-height: 1.35;
+      word-break: keep-all;
     }
 
-    /* 오른쪽 차트 */
+    /* 차트 영역 */
     .chart {
       flex: 1;
       min-width: 0;
-      position: relative;
     }
 
-    /* 월 헤더 */
     .months {
       display: grid;
       grid-template-columns: repeat(18, 1fr);
-      margin-bottom: 6px;
-      height: 34px;
+      margin-bottom: 8px;
+      height: 32px;
     }
 
     .month {
@@ -110,152 +113,4 @@
       color: #666;
       background: #f7f7fb;
       border-radius: 6px;
-      margin: 0 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 28px;
-    }
-
-    /* 그리드 */
-    .grid {
-      position: relative;
-      height: 200px;
-      background: linear-gradient(to right, 
-        transparent 0%, transparent calc(100% - 1px), #eee calc(100% - 1px));
-      background-size: calc(100% / 18) 100%;
-    }
-
-    .row {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 48px;
-      display: flex;
-      align-items: center;
-    }
-
-    .row:nth-child(1) { top: 6px; }
-    .row:nth-child(2) { top: 68px; }
-    .row:nth-child(3) { top: 130px; }
-
-    .bar {
-      position: absolute;
-      height: 34px;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .bar.sky   { background: linear-gradient(90deg, #5b9bd5, #7eb8e8); }
-    .bar.yellow{ background: linear-gradient(90deg, #f0c14b, #f7d774); color: #333; }
-    .bar.pink  { background: linear-gradient(90deg, #e88a9e, #f0a8b8); }
-
-    /* 하단 연도 */
-    .years {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      padding: 0 2px;
-      font-size: 12px;
-      color: #999;
-      font-weight: 500;
-    }
-
-    /* 모바일 */
-    @media (max-width: 640px) {
-      .side { width: 120px; }
-      .card-text { font-size: 11px; }
-      .bar { font-size: 12px; padding: 0 8px; }
-      .month { font-size: 10px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="title">
-      <div class="title-bar"></div>
-      <h1>PROJECT TIMELINE</h1>
-    </div>
-
-    <div class="timeline-wrap">
-      <!-- 왼쪽 카드 -->
-      <div class="side">
-        <div class="card">
-          <div class="card-icon">🚗</div>
-          <div class="card-text">AI 주차공유<br>플랫폼</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🏋️</div>
-          <div class="card-text">AI 홈트레이닝<br>프로그램</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🏗️</div>
-          <div class="card-text">지하공동구<br>스마트 관리</div>
-        </div>
-      </div>
-
-      <!-- 오른쪽 차트 -->
-      <div class="chart">
-        <div class="months">
-          <div class="month">9</div>
-          <div class="month">10</div>
-          <div class="month">11</div>
-          <div class="month">12</div>
-          <div class="month">1</div>
-          <div class="month">2</div>
-          <div class="month">3</div>
-          <div class="month">4</div>
-          <div class="month">5</div>
-          <div class="month">6</div>
-          <div class="month">7</div>
-          <div class="month">8</div>
-          <div class="month">9</div>
-          <div class="month">10</div>
-          <div class="month">11</div>
-          <div class="month">12</div>
-          <div class="month">1</div>
-          <div class="month">2</div>
-        </div>
-
-        <div class="grid">
-          <!-- AI 주차공유 : 2021.08~2022.02 -->
-          <div class="row">
-            <div class="bar pink" style="left: 55.55%; width: 42.88%;">
-              AI 주차공유 · PL
-            </div>
-          </div>
-
-          <!-- AI 홈트레이닝 : 2021.05~10 -->
-          <div class="row">
-            <div class="bar yellow" style="left: 44.44%; width: 33.33%;">
-              AI 홈트레이닝 · 사업기획
-            </div>
-          </div>
-
-          <!-- 지하공동구 : 2020.09~12 -->
-          <div class="row">
-            <div class="bar sky" style="left: 0%; width: 28%;">
-              지하공동구 스마트 관리
-            </div>
-          </div>
-        </div>
-
-        <div class="years">
-          <span>2020</span>
-          <span>2021</span>
-          <span>2022</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+      margin: 0 
