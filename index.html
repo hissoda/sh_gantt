@@ -71,7 +71,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      min-height: 58px;
+      min-height: 52px;
     }
 
     .card-icon {
@@ -100,7 +100,7 @@
 
     .months {
       display: grid;
-      grid-template-columns: repeat(18, 1fr);
+      grid-template-columns: repeat(22, 1fr);
       margin-bottom: 8px;
       height: 32px;
     }
@@ -121,21 +121,21 @@
 
     .grid {
       position: relative;
-      height: 190px;
+      height: 180px;
       background: linear-gradient(to right,
         transparent 0%, transparent calc(100% - 1px), #eee calc(100% - 1px));
-      background-size: calc(100% / 18) 100%;
+      background-size: calc(100% / 22) 100%;
     }
 
     .row {
       position: absolute;
       left: 0;
       right: 0;
-      height: 48px;
+      height: 52px;
     }
-    .row:nth-child(1) { top: 6px; }
-    .row:nth-child(2) { top: 64px; }
-    .row:nth-child(3) { top: 122px; }
+    .row:nth-child(1) { top: 4px; }
+    .row:nth-child(2) { top: 60px; }
+    .row:nth-child(3) { top: 116px; }
 
     .bar {
       position: absolute;
@@ -171,11 +171,18 @@
       .side {
         width: 140px;
         min-width: 132px;
+        padding-top: 38px;
+        gap: 10px;
       }
-      .card { padding: 11px 10px; min-height: 54px; }
+      .card { padding: 11px 10px; min-height: 50px; }
       .card-text { font-size: 12px; }
-      .bar { font-size: 12px; padding: 0 8px; }
+      .bar { font-size: 12px; padding: 0 8px; height: 32px; }
       .month { font-size: 10px; }
+      .grid { height: 170px; }
+      .row { height: 48px; }
+      .row:nth-child(1) { top: 4px; }
+      .row:nth-child(2) { top: 56px; }
+      .row:nth-child(3) { top: 108px; }
     }
 
     /* 모바일 - 가로 배치 유지, 카드 위로 올라가지 않음 */
@@ -202,7 +209,7 @@
 
       .card {
         padding: 9px 8px;
-        min-height: 50px;
+        min-height: 48px;
         gap: 7px;
       }
 
@@ -224,12 +231,12 @@
         border-radius: 5px;
       }
 
-      .grid { height: 168px; }
+      .grid { height: 160px; }
 
       .row { height: 42px; }
       .row:nth-child(1) { top: 4px; }
-      .row:nth-child(2) { top: 54px; }
-      .row:nth-child(3) { top: 104px; }
+      .row:nth-child(2) { top: 52px; }
+      .row:nth-child(3) { top: 100px; }
 
       .bar {
         height: 30px;
@@ -277,13 +284,13 @@
 
         <div class="grid">
           <div class="row">
-            <div class="bar pink" style="left:87.88%; width:30.33%;">PL (7개월)</div>
+            <div class="bar pink" style="left:72.73%; width:27.27%;">PL (5개월)</div>
           </div>
           <div class="row">
-            <div class="bar yellow" style="left:44.44%; width:33.33%;">사업기획 (6개월)</div>
+            <div class="bar yellow" style="left:36.36%; width:27.27%;">사업기획 (6개월)</div>
           </div>
           <div class="row">
-            <div class="bar sky" style="left:0%; width:22%;">산출물 관리 (4개월)</div>
+            <div class="bar sky" style="left:0%; width:18.18%;">산출물 관리 (4개월)</div>
           </div>
         </div>
 
